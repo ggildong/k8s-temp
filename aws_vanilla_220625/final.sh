@@ -1,13 +1,7 @@
 #!/bin/bash -xe
 echo ">>>> K8S Final config Start <<<<"
 
-echo "[TASK 9] Install Calico CNI"
-kubectl apply -f https://raw.githubusercontent.com/ggildong/k8s-temp/main/aws_vanilla_220625/calico-v3.26-CrossSubnet.yaml
-
-echo "sleep 3"
-sleep 3
-
-echo "[TASK 10] Setting PS1"
+echo "[TASK 11] Setting PS1"
 kubectl config rename-context "kubernetes-admin@kubernetes" "HomeLab"
 
 echo "[TASK 12] Dynamically provisioning persistent local storage with Kubernetes on k8s-m node - v0.0.22"
@@ -24,10 +18,5 @@ printf 'tolerations: [{key: node-role.kubernetes.io/master, operator: Exists, ef
 echo "[TASK 14] K8S v1.24 : k8s-m node config taint & label"
 kubectl taint node k8s-m node-role.kubernetes.io/control-plane- >/dev/null 2>&1
 kubectl label nodes k8s-m node-role.kubernetes.io/master= >/dev/null 2>&1
-
-echo "[TASK 15] Install calicoctl"
-curl -L https://github.com/projectcalico/calico/releases/download/v3.26.3/calicoctl-linux-amd64 -o calicoctl
-chmod +x calicoctl
-mv calicoctl /usr/local/bin/
 
 echo ">>>> K8S Final Config End <<<<"
