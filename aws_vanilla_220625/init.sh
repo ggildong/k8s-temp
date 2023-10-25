@@ -92,4 +92,9 @@ apt-mark hold kubelet kubeadm kubectl
 
 systemctl enable kubelet && systemctl start kubelet
 
+echo "[TASK 10] Git Clone"
+git clone https://github.com/ggildong/k8s-temp.git /root/k8s-temp
+find /root/k8s-temp -regex ".*\.\(sh\)" -exec chmod 700 {} \;
+cp /root/k8s-temp/aws_vanilla_220625/final.sh /root/final.sh
+
 echo ">>>> Initial Config End <<<<"
