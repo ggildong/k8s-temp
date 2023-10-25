@@ -7,7 +7,7 @@ echo "[TASK 2] Setting Sshd Config"
 sed -i "s/^PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 sed -i "s/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
 systemctl restart sshd
-echo  > .ssh/authorized_keys
+# echo  > .ssh/authorized_keys
 
 echo "[TASK 3] Change Timezone & Setting Profile & Bashrc"
 # Change Timezone
@@ -34,9 +34,6 @@ echo "[TASK 7] Install containerd.io"
 echo "swap off"
 swapoff -a
 sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
-
-echo "Turn off IPV6"
-grubby --update-kernel=ALL --args=ipv6.disable=1
 
 # Install Runtime - Containerd https://kubernetes.io/docs/setup/production-environment/container-runtimes/
 cat <<EOF > /etc/modules-load.d/containerd.conf
