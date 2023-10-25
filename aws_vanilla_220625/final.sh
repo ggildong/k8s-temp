@@ -10,9 +10,6 @@ sleep 3
 echo "[TASK 10] Setting PS1"
 kubectl config rename-context "kubernetes-admin@kubernetes" "HomeLab"
 
-echo "[TASK 11] Install Metrics server on k8s-m node - v0.6.1"
-kubectl apply -f https://raw.githubusercontent.com/ggildong/k8s-temp/main/aws_vanilla_220625/metrics-server.yaml
-
 echo "[TASK 12] Dynamically provisioning persistent local storage with Kubernetes on k8s-m node - v0.0.22"
 kubectl apply -f https://raw.githubusercontent.com/ggildong/k8s-temp/main/aws_vanilla_220625/local-path-storage.yaml
 kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
