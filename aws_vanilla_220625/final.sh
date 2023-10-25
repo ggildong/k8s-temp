@@ -1,9 +1,8 @@
 #!/bin/bash -xe
 echo ">>>> K8S Final config Start <<<<"
 
-echo "[TASK 9] Install Flannel CNI"
-#kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
-kubectl apply -f https://raw.githubusercontent.com/ggildong/k8s-temp/main/aws_vanilla_220625/kube-flannel-v0.18.0.yml
+echo "[TASK 9] Install Calico CNI"
+kubectl apply -f https://raw.githubusercontent.com/ggildong/k8s-temp/main/aws_vanilla_220625/calico-v3.26-CrossSubnet.yaml
 
 echo "sleep 3"
 sleep 3
