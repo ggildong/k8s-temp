@@ -34,4 +34,6 @@ sed -e "s/strictARP: false/strictARP: true/" | \
 sed -e "s/mode: .*/mode: \"ipvs\"/" | \
 kubectl apply -f - -n kube-system
 
+kubectl rollout restart ds kube-proxy -n kube-system
+
 echo ">>>> K8S Final Config End <<<<"
