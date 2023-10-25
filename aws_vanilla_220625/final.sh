@@ -15,8 +15,23 @@ printf 'tolerations: [{key: node-role.kubernetes.io/master, operator: Exists, ef
   --set nfs.server=$(cat /root/efs.txt) --set nfs.path=/ --set nodeSelector."kubernetes\.io/hostname"=k8s-m \
   --values /dev/stdin
 
-echo "[TASK 14] K8S v1.24 : k8s-m node config taint & label"
+echo "[TASK 14] K8S v1.24? : k8s-m node config taint & label"
 kubectl taint node k8s-m node-role.kubernetes.io/control-plane- >/dev/null 2>&1
 kubectl label nodes k8s-m node-role.kubernetes.io/master= >/dev/null 2>&1
+
+echo "Setting MetalLB"
+
+echo "[TASK 15] Change proxy-mode=ipvs"
+echo "# see what changes would be made, returns nonzero returncode if different"
+kubectl get configmap kube-proxy -n kube-system -o yaml | \
+sed -e "s/strictARP: false/strictARP: true/" | \
+sed -e "s/mode: .*/mode: \"ipvs\"/" | \
+kubectl diff -f - -n kube-system
+
+echo "# actually apply the changes, returns nonzero returncode on errors only"
+kubectl get configmap kube-proxy -n kube-system -o yaml | \
+sed -e "s/strictARP: false/strictARP: true/" | \
+sed -e "s/mode: .*/mode: \"ipvs\"/" | \
+kubectl apply -f - -n kube-system
 
 echo ">>>> K8S Final Config End <<<<"
