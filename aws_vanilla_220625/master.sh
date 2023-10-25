@@ -1,8 +1,17 @@
 #!/bin/bash -xe
 echo ">>>> K8S Controlplane config Start <<<<"
 
+echo "get my public ipv4"
+PUBLICIP=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
+
 echo "[TASK 1] Initial Kubernetes - Pod CIDR 172.16.0.0/16 , Service CIDR 10.200.1.0/24 , API Server 192.168.10.10"
-kubeadm init --kubernetes-version=$KUBERNETES_VERSION --token 123456.1234567890123456 --token-ttl 0 --pod-network-cidr=172.16.0.0/16 --apiserver-advertise-address=192.168.10.10 --service-cidr 10.200.1.0/24 
+if [[ "$PUBLICIP" =~ (([01]{,1}[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.([01]{,1}[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.([01]{,1}[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.([01]{,1}[0-9]{1,2}|2[0-4][0-9]|25[0-5]))$ ]]; then
+  echo "public ipv4: true"
+  kubeadm init --kubernetes-version=$KUBERNETES_VERSION --token 123456.1234567890123456 --token-ttl 0 --pod-network-cidr=172.16.0.0/16 --apiserver-advertise-address=192.168.10.10 --service-cidr 10.200.1.0/24 --apiserver-cert-extra-sans $PUBLICIP 
+else
+  echo "public ipv4: false"
+  kubeadm init --kubernetes-version=$KUBERNETES_VERSION --token 123456.1234567890123456 --token-ttl 0 --pod-network-cidr=172.16.0.0/16 --apiserver-advertise-address=192.168.10.10 --service-cidr 10.200.1.0/24 
+fi
 
 echo "[TASK 2] Setting kube config file"
 mkdir -p /root/.kube
