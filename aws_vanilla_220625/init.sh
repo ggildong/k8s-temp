@@ -35,6 +35,9 @@ echo "swap off"
 swapoff -a
 sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
+echo "Turn off IPV6"
+grubby --update-kernel=ALL --args=ipv6.disable=1
+
 # Install Runtime - Containerd https://kubernetes.io/docs/setup/production-environment/container-runtimes/
 cat <<EOF > /etc/modules-load.d/containerd.conf
 overlay
