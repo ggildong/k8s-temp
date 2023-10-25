@@ -25,4 +25,9 @@ echo "[TASK 14] K8S v1.24 : k8s-m node config taint & label"
 kubectl taint node k8s-m node-role.kubernetes.io/control-plane- >/dev/null 2>&1
 kubectl label nodes k8s-m node-role.kubernetes.io/master= >/dev/null 2>&1
 
+echo "[TASK 15] Install calicoctl"
+curl -L https://github.com/projectcalico/calico/releases/download/v3.26.3/calicoctl-linux-amd64 -o calicoctl
+chmod +x calicoctl
+mv calicoctl /usr/local/bin/
+
 echo ">>>> K8S Final Config End <<<<"
