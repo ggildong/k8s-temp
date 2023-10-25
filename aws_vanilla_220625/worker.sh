@@ -22,6 +22,6 @@ curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | 
 echo "[TASK 6] Install calicoctl"
 curl -L https://github.com/projectcalico/calico/releases/download/v3.26.3/calicoctl-linux-amd64 -o calicoctl
 chmod +x calicoctl
-sudo mv calicoctl /usr/local/bin/
+mv calicoctl /usr/local/bin/
 
 echo ">>>> K8S Node config End <<<<"
