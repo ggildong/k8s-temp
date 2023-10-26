@@ -19,9 +19,4 @@ echo 'complete -F __start_kubectl k' >> /etc/profile
 echo "[TASK 5] Install Helm"
 curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
-echo "[TASK 6] Install calicoctl"
-curl -L https://github.com/projectcalico/calico/releases/download/v3.26.3/calicoctl-linux-amd64 -o calicoctl
-chmod +x calicoctl
-mv calicoctl /usr/local/bin/
-
 echo ">>>> K8S Node config End <<<<"
