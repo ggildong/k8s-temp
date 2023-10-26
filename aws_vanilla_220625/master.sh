@@ -25,12 +25,12 @@ echo "[TASK 4] Alias kubectl to k"
 echo 'alias k=kubectl' >> /etc/profile
 echo 'complete -F __start_kubectl k' >> /etc/profile
 
-echo "[TASK 5] Install Kubectx & Kubens"
+echo "[TASK 5] Install kubectx & kubens"
 git clone https://github.com/ahmetb/kubectx /opt/kubectx
 ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
 
-echo "[TASK 6] Install Kubeps"
+echo "[TASK 6] Install kubeps"
 git clone https://github.com/jonmosco/kube-ps1.git /root/kube-ps1
 cat <<"EOT" >> /root/.bash_profile
 source /root/kube-ps1/kube-ps1.sh
@@ -44,13 +44,13 @@ KUBE_PS1_SUFFIX=') '
 PS1='$(kube_ps1)'$PS1
 EOT
 
-echo "[TASK 7] Install Packages"
+echo "[TASK 7] Install kubetail & etcd"
 apt install kubetail etcd-client -y
 
-echo "[TASK 8] Install Helm"
+echo "[TASK 8] Install helm"
 curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
-echo "[TASK 9] Create Directory"
+echo "[TASK 9] Create Directory (nfs4-share)"
 mkdir /nfs4-share
 
 echo ">>>> K8S Controlplane Config End <<<<"
