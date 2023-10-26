@@ -92,7 +92,17 @@ apt-mark hold kubelet kubeadm kubectl
 
 systemctl enable kubelet && systemctl start kubelet
 
-echo "[TASK 10] Git Clone"
+echo "[TASK 10] Install the Cilium CLI"
+CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
+CLI_ARCH=amd64
+if [ "$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
+curl -L --fail --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
+sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
+rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+
+
+echo "[TASK 11] Git Clone"
 git clone https://github.com/ggildong/k8s-temp.git /root/k8s-temp
 find /root/k8s-temp -regex ".*\.\(sh\)" -exec chmod 700 {} \;
 cp /root/k8s-temp/aws_vanilla_220625/final.sh /root/final.sh
