@@ -53,12 +53,4 @@ curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | 
 echo "[TASK 9] Create Directory"
 mkdir /nfs4-share
 
-echo "[TASK 10] Install Calico CNI"
-kubectl apply -f https://raw.githubusercontent.com/ggildong/k8s-temp/main/aws_vanilla_220625/calico-v3.26-CrossSubnet.yaml
-
-echo "Install calicoctl"
-curl -L https://github.com/projectcalico/calico/releases/download/v3.26.3/calicoctl-linux-amd64 -o calicoctl
-chmod +x calicoctl
-mv calicoctl /usr/local/bin/
-
 echo ">>>> K8S Controlplane Config End <<<<"
