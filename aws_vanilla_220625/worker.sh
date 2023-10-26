@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-echo ">>>> K8S Node config Start <<<<"
+echo ">>>> K8S Dataplane config Start <<<<"
 
 echo "[TASK 1] K8S Controlplane Join - API Server 192.168.10.10" 
 kubeadm join --token 123456.1234567890123456 --discovery-token-unsafe-skip-ca-verification 192.168.10.10:6443
@@ -16,7 +16,7 @@ echo "[TASK 4] Alias kubectl to k"
 echo 'alias k=kubectl' >> /etc/profile
 echo 'complete -F __start_kubectl k' >> /etc/profile
 
-echo "[TASK 5] Install Helm"
+echo "[TASK 5] Install helm"
 curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
 echo ">>>> K8S Node config End <<<<"
