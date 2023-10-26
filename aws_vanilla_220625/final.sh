@@ -19,4 +19,10 @@ echo "[TASK 14] k8s-m node config taint & label"
 kubectl taint node k8s-m node-role.kubernetes.io/control-plane- >/dev/null 2>&1
 kubectl label nodes k8s-m node-role.kubernetes.io/master= >/dev/null 2>&1
 
+echo "[TASK 15] Install Cilium"
+cilium version --client
+cilium install --version 1.14.3
+cilium status --wait
+cilium connectivity test
+
 echo ">>>> K8S Final Config End <<<<"
