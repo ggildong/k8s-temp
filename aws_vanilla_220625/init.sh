@@ -22,7 +22,7 @@ systemctl stop apparmor && systemctl disable apparmor
 
 echo "[TASK 5] Install Packages"
 apt update && apt install -y tree jq sshpass bridge-utils net-tools bat exa duf nfs-common sysstat
-echo "alias cat='batcat --paging=never'" >> /etc/profile
+# echo "alias cat='batcat --paging=never'" >> /etc/profile
 
 echo "[TASK 6] Setting hostname Using AWS Private DNS"
 hostnamectl set-hostname $(curl -s http://169.254.169.254/latest/meta-data/local-hostname)
