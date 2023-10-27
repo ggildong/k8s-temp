@@ -24,11 +24,13 @@ echo "[TASK 5] Install Packages"
 apt update && apt install -y tree jq sshpass bridge-utils net-tools bat exa duf nfs-common sysstat
 echo "alias cat='batcat --paging=never'" >> /etc/profile
 
-echo "[TASK 6] Setting Local DNS Using Hosts file"
-echo "192.168.10.10 k8s-m" >> /etc/hosts
-echo "192.168.10.101 k8s-w1" >> /etc/hosts
-echo "192.168.10.102 k8s-w2" >> /etc/hosts
-echo "192.168.20.103 k8s-w3" >> /etc/hosts
+echo "[TASK 6] Setting hostname Using AWS Private DNS"
+hostnamectl set-hostname $(curl -s http://169.254.169.254/latest/meta-data/local-hostname)
+#echo "[TASK 6] Setting Local DNS Using Hosts file"
+#echo "192.168.10.10 k8s-m" >> /etc/hosts
+#echo "192.168.10.101 k8s-w1" >> /etc/hosts
+#echo "192.168.10.102 k8s-w2" >> /etc/hosts
+#echo "192.168.20.103 k8s-w3" >> /etc/hosts
 
 echo "[TASK 7] Install containerd.io"
 echo "swap off"
@@ -90,7 +92,7 @@ echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://apt.k
 apt-get update && apt-get install -y kubelet=$KUBERNETES_VERSION-00 kubectl=$KUBERNETES_VERSION-00 kubeadm=$KUBERNETES_VERSION-00
 apt-mark hold kubelet kubeadm kubectl
 
-systemctl enable kubelet && systemctl start kubelet
+# systemctl enable kubelet && systemctl start kubelet
 
 echo "[TASK 10] Install the Cilium CLI"
 CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
