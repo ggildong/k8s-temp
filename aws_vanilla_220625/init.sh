@@ -42,6 +42,7 @@ cat <<EOF > /etc/modules-load.d/containerd.conf
 overlay
 br_netfilter
 EOF
+
 modprobe overlay
 modprobe br_netfilter
 
@@ -50,6 +51,7 @@ net.bridge.bridge-nf-call-iptables  = 1
 net.bridge.bridge-nf-call-ip6tables = 1
 net.ipv4.ip_forward                 = 1
 EOF
+
 sysctl -p 
 sysctl --system 
 
@@ -92,7 +94,7 @@ echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://apt.k
 apt-get update && apt-get install -y kubelet=$KUBERNETES_VERSION-00 kubectl=$KUBERNETES_VERSION-00 kubeadm=$KUBERNETES_VERSION-00
 apt-mark hold kubelet kubeadm kubectl
 
-# systemctl enable kubelet && systemctl start kubelet
+systemctl enable kubelet && systemctl start kubelet
 
 echo "[TASK 10] Install the Cilium CLI"
 CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
