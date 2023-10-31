@@ -34,4 +34,10 @@ curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | 
 echo "[TASK 9] Create Directory (nfs4-share)"
 mkdir /nfs4-share
 
+echo "[TASK 10] Install Cilium"
+cilium version --client
+cilium install --version 1.14.3 --set ipam.operator.clusterPoolIPv4PodCIDRList="172.16.0.0/16"
+cilium status --wait
+# cilium connectivity test
+
 echo ">>>> K8S Controlplane Config End <<<<"
