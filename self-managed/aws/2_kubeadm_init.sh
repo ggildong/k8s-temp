@@ -19,19 +19,30 @@ mkdir -p /root/.kube
 cp -i /etc/kubernetes/admin.conf /root/.kube/config
 chown $(id -u):$(id -g) /root/.kube/config
 
-echo "[TASK 3] Source the completion"
+echo "[TASK 3] Install kubetail, kubecolor & etcd"
+apt install kubetail etcd-client -y
+
+curl -L --fail --remote-name-all https://github.com/hidetatz/kubecolor/releases/download/v0.0.25/kubecolor_0.0.25_Linux_x86_64.tar.gz
+tar xzvfC kubecolor_0.0.25_Linux_x86_64.tar.gz /usr/local/bin
+
+wget https://github.com/hidetatz/kubecolor/releases/download/v0.0.25/kubecolor_0.0.25_Linux_x86_64.tar.gz
+tar zxvf kubecolor_0.0.25_Linux_x86_64.tar.gz
+
+echo "[TASK 4] Source the completion"
 echo 'source <(kubectl completion bash)' >> /etc/profile
 
-echo "[TASK 4] Alias kubectl to k"
-echo 'alias k=kubectl' >> /etc/profile
+echo "[TASK 5] Alias kubectl to k"
+echo 'alias k=kubecolor' >> /etc/profile
+echo 'alias kubectl=kubecolor' >> /etc/profile
 echo 'complete -F __start_kubectl k' >> /etc/profile
+echo 'complete -F __start_kubectl kubecolor' >> /etc/profile
 
-# echo "[TASK 5] Install kubectx & kubens"
+# echo "[TASK 6] Install kubectx & kubens"
 # git clone https://github.com/ahmetb/kubectx /opt/kubectx
 # ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 # ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
 
-# echo "[TASK 6] Install kubeps"
+# echo "[TASK 7] Install kubeps"
 # git clone https://github.com/jonmosco/kube-ps1.git /root/kube-ps1
 # cat <<"EOT" >> /root/.bash_profile
 # source /root/kube-ps1/kube-ps1.sh
@@ -44,9 +55,6 @@ echo 'complete -F __start_kubectl k' >> /etc/profile
 # KUBE_PS1_SUFFIX=') '
 # PS1='$(kube_ps1)'$PS1
 # EOT
-
-echo "[TASK 7] Install kubetail & etcd"
-apt install kubetail etcd-client -y
 
 echo "[TASK 8] Install helm"
 curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
